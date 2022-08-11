@@ -2,23 +2,35 @@ import React, { Component } from 'react';
 import {Button, Card} from 'react-bootstrap';
 
 export default class Product extends Component {
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         cart: 0,
+    //     }
+    // }
+    // handleClicks(){
+
+    // this.setState((prev) => 
+    // ({
+    //   cart: prev.cart + 1
+    // }))
+
+    // }
     constructor(props){
-        super(props);
-        this.state = {
-            cart: 0,
-        }
+      super(props)
+      this.state = {
+        addedToCart: false,
+        // passed: 'Passed Down'
+      }
     }
-    handleClicks(){
-
-    this.setState((prev) => 
-    ({
-        cart: prev.cart + 1
-    })
-    )
-
-    console.log(this.state.cart); // console is syncrhonous
-
+  
+    addItem = () => {
+      this.setState({addedToCart: true}, ()=>console.log('item added to cart'));
     }
+    removeItem = () => {
+      this.setState({addedToCart: false}, ()=>console.log('item removed from  cart'));
+    }
+
   render() {
     return (
       <>
@@ -29,14 +41,14 @@ export default class Product extends Component {
        <img  src={this.props.img} alt={this.props.title}/>
        <p>{this.props.description}</p>  */}
 
-       <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '18rem' }}>
        <Card.Img variant="top" src={this.props.img} alt={this.props.title}/>
        <Card.Body>
         <Card.Title>{this.props.title}</Card.Title>
         <Card.Text>{this.props.description}</Card.Text>
-        <Button onClick={() => this.handleClicks()} variant='primary'>🛒 {this.state.cart} added to cart</Button>
+        {this.state.addedToCart ? <Button onClick={this.removeItem} variant='warning'>Remove 🛒</Button> : <Button onClick={this.addItem} variant='primary'>Add 🛒 {/*{this.state.cart}*/}</Button>}
        </Card.Body>
-        </Card>
+      </Card>
       </>
     )
   }
